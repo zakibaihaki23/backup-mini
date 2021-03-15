@@ -157,7 +157,7 @@
                   >
                 </template>
                 <v-list>
-                  <v-list-item>
+                  <v-list-item style="width: 150px">
                     <v-dialog max-width="500px">
                       <template
                         slot:item.actions="{ item }"
@@ -172,6 +172,9 @@
                       </template>
                     </v-dialog>
                   </v-list-item>
+                  <v-divider
+                    style="margin-left: 10px;margin-right: 10px"
+                  ></v-divider>
                   <v-list-item>
                     <v-list-item-title>
                       Active
@@ -189,8 +192,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
-
   export default {
     data() {
       return {
@@ -279,12 +280,8 @@
       },
       renderData() {
         const token = localStorage.getItem('token')
-        axios
-          .get('v1/packing', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+        this.$http
+          .get('v1/packing')
           .then((response) => {
             // let that = this;
 

@@ -36,6 +36,7 @@ const routes = [
     subtitle: 'Components',
     path: '/helper',
     open: false,
+
     beforeEnter: (to, from, next) => {
       if (!store.getters['auth/authenticated']) {
         return next({
@@ -46,9 +47,63 @@ const routes = [
     },
     children: [
       {
-        name: 'Help',
+        name: 'Helper List',
         component: () => import('../views/Helper/Helper'),
         path: '',
+      },
+    ],
+  },
+  {
+    name: 'Create Helper',
+    component: MainLayout,
+    subtitle: 'Components',
+    path: '/helper/create-helper',
+    open: false,
+    beforeEnter: (to, from, next) => {
+      if (!store.getters['auth/authenticated']) {
+        return next({
+          name: 'Login',
+        })
+      }
+      next()
+    },
+    children: [
+      {
+        name: 'Registration Helper',
+        component: () => import('../views/Helper/RegistrationHelper'),
+        path: '/helper/registration-helper',
+      },
+      {
+        name: 'Update Helper',
+        component: () => import('../views/Helper/UpdateHelper'),
+        path: '/helper/update-helper/:id',
+      },
+    ],
+  },
+  {
+    name: 'Picking Create',
+    component: MainLayout,
+    subtitle: 'Components',
+    path: '/picking/picking-create',
+    open: false,
+    beforeEnter: (to, from, next) => {
+      if (!store.getters['auth/authenticated']) {
+        return next({
+          name: 'Login',
+        })
+      }
+      next()
+    },
+    children: [
+      {
+        name: 'Create Picking',
+        component: () => import('../views/Picking/CreatePicking'),
+        path: '/picking/create-picking',
+      },
+      {
+        name: 'Update Picking',
+        component: () => import('../views/Picking/UpdatePicking'),
+        path: '/picking/update-picking/:id',
       },
     ],
   },
@@ -62,7 +117,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (store.getters['auth/authenticated']) {
         return next({
-          name: 'Help',
+          name: 'Helper List',
         })
       }
       next()
@@ -96,7 +151,7 @@ const routes = [
     },
     children: [
       {
-        name: '',
+        name: 'Packing List',
         component: () => import('../views/Packing/Packing'),
         path: '',
       },
@@ -118,7 +173,7 @@ const routes = [
     },
     children: [
       {
-        name: '',
+        name: 'Picking List',
         component: () => import('../views/Picking/Picking'),
         path: '',
         meta: { hideNavigation: true },
@@ -170,6 +225,11 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = `${to.name} - Eden Farm`
+  next()
 })
 
 export default router

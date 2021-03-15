@@ -1,10 +1,7 @@
 <template>
   <div id="login" class="bigbk">
     <div>
-      <v-img
-        class="gbr"
-        src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/mlogo/EDF-60021.png"
-      ></v-img>
+      <v-img class="gbr" src="@/assets/Logo-Login.png"></v-img>
     </div>
     <v-container class="login-container">
       <v-form @submit.prevent="submit" ref="form" v-model="valid">
@@ -82,9 +79,8 @@
 
       submit() {
         this.signIn(this.form).then(() => {
-          this.$router.replace({
-            name: 'Help',
-          })
+          window.location.reload()
+          this.$router.push('/helper')
         })
       },
     },
@@ -148,9 +144,7 @@
   }
   .gbr {
     position: absolute;
-    left: 45.49%;
-    right: 45.49%;
-    top: 9.41%;
-    bottom: 70%;
+    left: 659px;
+    margin: 220px;
   }
 </style>
